@@ -1,22 +1,17 @@
-package com.example.lightCrud.Dto.response;
+package com.example.lightCrud.Dto.board;
 
 import com.example.lightCrud.Entity.Board;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
+@NoArgsConstructor
 public class BoardResponseDto {
-    private Long id;
     private String title;
     private String content;
 
-    public BoardResponseDto() {
-
-    }
-
     public BoardResponseDto(Board board){
-        this.id = board.getId();
         this.title = board.getTitle();
         this.content = board.getContent();
     }

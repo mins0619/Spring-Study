@@ -1,12 +1,14 @@
 package com.example.lightCrud.Controller;
 
-import com.example.lightCrud.Dto.request.BoardRequestDto;
-import com.example.lightCrud.Dto.response.BoardResponseDto;
-import com.example.lightCrud.Service.BoardService;
+import com.example.lightCrud.Dto.board.BoardRequestDto;
+import com.example.lightCrud.Dto.board.BoardResponseDto;
+import com.example.lightCrud.Service.Interface.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -17,19 +19,21 @@ public class BoardContorller {
     private final BoardService boardService;
 
 
-
-    @PostMapping
-    public void getCreate(@RequestBody BoardRequestDto requsetDto) {
-        boardService.getCreate(requsetDto);
-    }
-
     @GetMapping
     public ResponseEntity<List<BoardResponseDto>> getAllBoards() {
         List<BoardResponseDto> boardList = boardService.getAllBoards();
         return ResponseEntity.ok(boardList);
     }
 
-    @GetMapping("/{id}")
+    @PostMapping
+    public  ResponseEntity<String> getBoardCreate(@RequestBody BoardRequestDto boardDto,
+                                             HttpServletRequest request){
+        boardService.getBoardCreate(boardDto, request);
+        return ResponseEntity.ok("게시글이 생성되었습니다.");
+    }
+
+
+    /*@GetMapping("/{id}")
     public BoardResponseDto getBoard(@PathVariable Long id) {
         return boardService.getBoard(id);
     }
@@ -44,7 +48,7 @@ public class BoardContorller {
         boardService.getDelete(id);
         return  ResponseEntity.ok("Board deleted.");
     }
-
+*/
 
 
 }

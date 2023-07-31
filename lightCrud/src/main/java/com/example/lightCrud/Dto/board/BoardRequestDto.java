@@ -1,4 +1,4 @@
-package com.example.lightCrud.Dto.request;
+package com.example.lightCrud.Dto.board;
 
 import lombok.Getter;
 import lombok.Setter;

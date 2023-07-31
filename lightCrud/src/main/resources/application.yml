@@ -9,7 +9,7 @@ spring:
     password: vic02139450!
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -21,8 +21,8 @@ spring:
 
 jwt:
   secret: dndhkanjsrkgoTsmsepdlfjgrptkdydgksmsrjrnsk
-  accessTokenExpiration: 3600
-  refreshTokenExpiration: 604800
+  accessTokenExpiration: 3600000
+  refreshTokenExpiration: 6048000
 
 
 

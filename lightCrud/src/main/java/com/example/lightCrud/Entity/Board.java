@@ -1,16 +1,16 @@
 package com.example.lightCrud.Entity;
 
-import com.example.lightCrud.Dto.request.BoardRequestDto;
+import com.example.lightCrud.Dto.board.BoardRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
 
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 @Table(name = "board")
-public class Board {
+public class Board extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
@@ -22,10 +22,21 @@ public class Board {
     @Column(columnDefinition = "TEXT") // 긴 글을 대비한 로직
     private String content;
 
-    public Board(String title, String content) {
-        this.title = title;
-        this.content = content;
+    @Column(columnDefinition = "TINYINT(1)")
+    private boolean deleted;
+
+    // Many-to-One relationship with User
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    public Board(BoardRequestDto requestDto, User user) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.user = user;
+        this.deleted = false;
     }
+
 
     public void CUpdate(BoardRequestDto updateDto){
         this.title = updateDto.getTitle();
