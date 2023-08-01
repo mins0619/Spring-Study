@@ -21,8 +21,8 @@ spring:
 
 jwt:
   secret: dndhkanjsrkgoTsmsepdlfjgrptkdydgksmsrjrnsk
-  accessTokenExpiration: 3600000
-  refreshTokenExpiration: 6048000
+  accessTokenExpiration: 36000000
+  refreshTokenExpiration: 60480000
 
 
 

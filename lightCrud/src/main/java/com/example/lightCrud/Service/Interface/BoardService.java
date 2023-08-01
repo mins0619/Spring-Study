@@ -14,6 +14,6 @@ public interface BoardService {
     List<BoardResponseDto> getAllBoards();
 
     /*void updateBoard(Long boardId, BoardRequestDto updateDto,
-                     HttpServletRequest request);
-    void deleteBoard(Long boardId, HttpServletRequest request);*/
+                     HttpServletRequest request);*/
+    void deleteBoard(Long boardId, HttpServletRequest request);
 }

@@ -42,13 +42,14 @@ public class BoardContorller {
     public void getUpdate(@PathVariable Long id, @RequestBody BoardRequestDto updateDto){
         boardService.getUpdate(id,updateDto);
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> getDelete(@PathVariable Long id){
-        boardService.getDelete(id);
+*/
+    @DeleteMapping("/{boardId}")
+    public ResponseEntity<String> deleteBoard(@PathVariable(name = "boardId") Long boardId,
+                                              HttpServletRequest request){
+        boardService.deleteBoard(boardId, request);
         return  ResponseEntity.ok("Board deleted.");
     }
-*/
+
 
 
 }

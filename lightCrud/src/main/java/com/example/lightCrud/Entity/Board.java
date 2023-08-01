@@ -43,4 +43,8 @@ public class Board extends BaseTimeEntity{
         this.content = updateDto.getContent();
     }
 
+    public void deleteBoard() {
+        this.deleted = true;
+    }
+
 }

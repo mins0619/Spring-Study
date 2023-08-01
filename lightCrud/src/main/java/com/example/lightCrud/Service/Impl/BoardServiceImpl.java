@@ -84,11 +84,22 @@ public class BoardServiceImpl implements BoardService {
         board.CUpdate(updateDto);
         boardRepository.save(board);
 
+    }*/
+    @Override
+    public void deleteBoard(Long boardId, HttpServletRequest request){
+        vlidateBoard(boardId, request);
+        boardRepository.deleteById(boardId);
     }
 
-    public void getDelete(Long id){
-        boardRepository.deleteById(id);
-    }*/
+    public Board vlidateBoard(Long boardId, HttpServletRequest request){
+        Board board = boardRepository.findByIdAndDeletedIsFalse(boardId);
+        User user = userService.findUserByToken(request);
+        if(board == null) throw new NotFoundException("게시물 없음", ErrorCode.NOT_FOUND_EXCEPTION);
+        if(board.getUser() != user) {
+            throw new UnAuthorizedException("401 권한 없음", ErrorCode.NOT_ALLOW_WRITE_EXCEPTION);
+        }
+        return board;
+    }
 
 
 }
