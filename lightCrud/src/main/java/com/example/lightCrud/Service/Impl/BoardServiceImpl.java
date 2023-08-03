@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -60,31 +61,24 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardResponseDto getBoardById(Long boardId) {
-        Board board = boardRepository.findByIdAndDeletedIsFalse(boardId);
-        if(board == null) throw new NotFoundException("게시물 없음", ErrorCode.NOT_FOUND_EXCEPTION);
+        Optional<Board> boardAuth = boardRepository.findById(boardId);
+        if(boardAuth.isEmpty()) throw new NotFoundException("게시물 없음", ErrorCode.NOT_FOUND_EXCEPTION);
+
+        Board board = boardAuth.get();
         BoardResponseDto dto = new BoardResponseDto(board);
         return dto;
     }
 
 
 
-
-
-
-   /* public BoardResponseDto getBoard(Long id) {
-        Board board = boardRepository.findById(id).orElse(null);
-        return new BoardResponseDto(board); // DTO 생성자를 통해 엔티티를 파라미터로 받아 만들어서
+    @Override
+    public void updateBoard(Long boardId, BoardRequestDto updateDto, HttpServletRequest request) {
+        Board board = vlidateBoard(boardId, request);
+        board.updateBoard(updateDto);
     }
 
-    public void getUpdate(Long id, BoardRequestDto updateDto){
-        Board board = boardRepository.findById(id)
-                .orElseThrow(()-> {
-                    throw new RuntimeException();
-                });
-        board.CUpdate(updateDto);
-        boardRepository.save(board);
 
-    }*/
+
     @Override
     public void deleteBoard(Long boardId, HttpServletRequest request){
         vlidateBoard(boardId, request);
@@ -92,10 +86,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public Board vlidateBoard(Long boardId, HttpServletRequest request){
-        Board board = boardRepository.findByIdAndDeletedIsFalse(boardId);
+        Optional<Board> boardAuth = boardRepository.findById(boardId);
         User user = userService.findUserByToken(request);
-        if(board == null) throw new NotFoundException("게시물 없음", ErrorCode.NOT_FOUND_EXCEPTION);
-        if(board.getUser() != user) {
+        if (boardAuth.isEmpty()) {
+            throw new NotFoundException("게시물 없음", ErrorCode.NOT_FOUND_EXCEPTION);
+        }
+        Board board = boardAuth.get();
+        if (!board.getUser().equals(user)) {
             throw new UnAuthorizedException("401 권한 없음", ErrorCode.NOT_ALLOW_WRITE_EXCEPTION);
         }
         return board;

@@ -22,9 +22,6 @@ public class Board extends BaseTimeEntity{
     @Column(columnDefinition = "TEXT") // 긴 글을 대비한 로직
     private String content;
 
-    @Column(columnDefinition = "TINYINT(1)")
-    private boolean deleted;
-
     // Many-to-One relationship with User
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -34,17 +31,13 @@ public class Board extends BaseTimeEntity{
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.user = user;
-        this.deleted = false;
     }
 
 
-    public void CUpdate(BoardRequestDto updateDto){
+    public void updateBoard(BoardRequestDto updateDto){
         this.title = updateDto.getTitle();
         this.content = updateDto.getContent();
     }
 
-    public void deleteBoard() {
-        this.deleted = true;
-    }
 
 }

@@ -1,23 +1,12 @@
 package com.example.lightCrud.Dto.board;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
+@NoArgsConstructor
 public class BoardRequestDto {
-    private Long id;
     private String title;
     private String content;
-
-    public BoardRequestDto() {
-
-    }
-
-
-
-
-
-
-
 }

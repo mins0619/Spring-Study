@@ -33,16 +33,22 @@ public class BoardContorller {
     }
 
 
-    /*@GetMapping("/{id}")
-    public BoardResponseDto getBoard(@PathVariable Long id) {
-        return boardService.getBoard(id);
+    @GetMapping("/{boardId}")
+    public ResponseEntity<BoardResponseDto> getBoardById(@PathVariable(name = "boardId") Long boardId) {
+        BoardResponseDto dto = boardService.getBoardById(boardId);
+        return ResponseEntity.ok(dto);
     }
 
-    @PutMapping("/{id}")
-    public void getUpdate(@PathVariable Long id, @RequestBody BoardRequestDto updateDto){
-        boardService.getUpdate(id,updateDto);
+
+    @PutMapping("/{boardId}")
+    public ResponseEntity<String> updateBoard(@PathVariable(name = "boardId") Long boardId,
+                                              @RequestBody BoardRequestDto updateDto,
+                                              HttpServletRequest request){
+        boardService.updateBoard(boardId, updateDto, request);
+        return ResponseEntity.ok("게시글 수정 완료");
     }
-*/
+
+
     @DeleteMapping("/{boardId}")
     public ResponseEntity<String> deleteBoard(@PathVariable(name = "boardId") Long boardId,
                                               HttpServletRequest request){
