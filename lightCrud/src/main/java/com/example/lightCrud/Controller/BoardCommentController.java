@@ -31,7 +31,15 @@ public class BoardCommentController {
                                              @RequestBody CommentRequestDto requestDto,
                                              HttpServletRequest request){
         commentService.addComment(boardId, requestDto, request);
-        return ResponseEntity.status(HttpStatus.CREATED).body("리뷰 등록 완료");
+        return ResponseEntity.status(HttpStatus.CREATED).body("댓글이 작성되었습니다.");
     }
+
+    @DeleteMapping("/boards/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable(name = "commentId") Long commentId,
+                                                HttpServletRequest request ){
+        commentService.deleteComment(commentId, request);
+        return ResponseEntity.ok("댓글이 삭제되었습니다.");
+    }
+
 
 }

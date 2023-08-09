@@ -1,9 +1,12 @@
 package com.example.lightCrud.Dto.Comment;
 
 import com.example.lightCrud.Entity.BoardComment;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.format.DateTimeFormatter;
-
+@Getter
+@NoArgsConstructor
 public class CommentListResDto {
     private String userName;
     private String content;

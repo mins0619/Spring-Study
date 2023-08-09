@@ -12,6 +12,7 @@ import com.example.lightCrud.Service.Interface.CommentService;
 import com.example.lightCrud.Service.Interface.UserService;
 import com.example.lightCrud.enums.UserRole;
 import com.example.lightCrud.error.ErrorCode;
+import com.example.lightCrud.error.exception.NotFoundException;
 import com.example.lightCrud.error.exception.UnAuthorizedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,7 +56,24 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(comment);
     }
 
+    @Override
+    public void deleteComment(Long commentId, HttpServletRequest request){
+        vlidateComment(commentId, request);
+        commentRepository.deleteById(commentId);
+    }
 
+    public BoardComment vlidateComment(Long commentId, HttpServletRequest request){
+        Optional<BoardComment> commentAuth = commentRepository.findById(commentId);
+        User user = userService.findUserByToken(request);
+        if(commentAuth.isEmpty()){
+            throw new NotFoundException("게시물 없음", ErrorCode.NOT_FOUND_EXCEPTION);
+        }
+        BoardComment comment = commentAuth.get();
+        if (!comment.getUser().equals(user)) {
+            throw new UnAuthorizedException("401 권한 없음", ErrorCode.NOT_ALLOW_WRITE_EXCEPTION);
+        }
+        return comment;
+    }
 
 
 }

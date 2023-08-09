@@ -2,6 +2,7 @@ package com.example.lightCrud.Entity;
 
 import com.example.lightCrud.Dto.Comment.CommentRequestDto;
 import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,11 +10,13 @@ import javax.persistence.*;
 
 @Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본생성자 생성
 public class BoardComment extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_id")
     private Long id;
 
     @Column(nullable = false)
@@ -28,7 +31,7 @@ public class BoardComment extends BaseTimeEntity{
     private User user;
 
     public BoardComment(CommentRequestDto requestDto, Board board, User user){
-        this.content = requestDto.toString();
+        this.content = requestDto.getContent();
         this.board = board;
         this.user = user;
     }
