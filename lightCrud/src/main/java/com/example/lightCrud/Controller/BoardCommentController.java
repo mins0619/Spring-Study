@@ -3,6 +3,7 @@ package com.example.lightCrud.Controller;
 
 import com.example.lightCrud.Dto.Comment.CommentListResDto;
 import com.example.lightCrud.Dto.Comment.CommentRequestDto;
+import com.example.lightCrud.Dto.board.BoardRequestDto;
 import com.example.lightCrud.Service.Interface.BoardService;
 import com.example.lightCrud.Service.Interface.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,17 @@ public class BoardCommentController {
         commentService.addComment(boardId, requestDto, request);
         return ResponseEntity.status(HttpStatus.CREATED).body("댓글이 작성되었습니다.");
     }
+
+    @PutMapping("boards/{commentId}")
+    public ResponseEntity<String> updateComment(@PathVariable(name = "commentId") Long commentId,
+                                                @RequestBody CommentRequestDto updateDto,
+                                                HttpServletRequest request){
+        commentService.updateComment(commentId, updateDto, request);
+        return ResponseEntity.ok("게시글 수정 완료");
+    }
+
+
+
 
     @DeleteMapping("/boards/{commentId}")
     public ResponseEntity<String> deleteComment(@PathVariable(name = "commentId") Long commentId,

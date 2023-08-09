@@ -62,6 +62,13 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteById(commentId);
     }
 
+    @Override
+    public void updateComment(Long commentId, CommentRequestDto updateDto, HttpServletRequest request){
+        BoardComment comment = vlidateComment(commentId, request);
+        comment.updateComment(updateDto);
+    }
+
+
     public BoardComment vlidateComment(Long commentId, HttpServletRequest request){
         Optional<BoardComment> commentAuth = commentRepository.findById(commentId);
         User user = userService.findUserByToken(request);

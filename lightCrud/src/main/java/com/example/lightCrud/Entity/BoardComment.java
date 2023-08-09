@@ -1,6 +1,7 @@
 package com.example.lightCrud.Entity;
 
 import com.example.lightCrud.Dto.Comment.CommentRequestDto;
+import com.example.lightCrud.Dto.board.BoardRequestDto;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
@@ -34,6 +35,9 @@ public class BoardComment extends BaseTimeEntity{
         this.content = requestDto.getContent();
         this.board = board;
         this.user = user;
+    }
+    public void updateComment(CommentRequestDto updateDto){
+        this.content = updateDto.getContent();
     }
 
 }
