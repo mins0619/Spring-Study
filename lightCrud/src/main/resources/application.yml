@@ -1,15 +1,21 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   datasource:
+    url: ENC(nUO/cRq43uSDJaNgYpmmrAWa8QcPpSJ6OTcgWprXxicnRaXxdpURFMIgQIya/rq8OIHsSP4s8zqNnWI5x/0q8r6dbarEruD6LZ+e2fEvX8IAJC6RVv4jaw==)
+    username: ENC(RyiFxxJU2mnml3GuZCB1XQ==)
+    password: ENC(jS0P6LsaCYZHJF5ueXR81wIGN+AoocBf)
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/light_crud
-    username: root
-    password: vic02139450!
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -20,9 +26,9 @@ spring:
       max-request-size: 10MB
 
 jwt:
-  secret: dndhkanjsrkgoTsmsepdlfjgrptkdydgksmsrjrnsk
-  accessTokenExpiration: 36000000
-  refreshTokenExpiration: 60480000
+  secret: ENC(e0H9bjqTWhNejZENN4QZgdWX84a6DKP9AKXJdXWzzYZQyLfJmzTcXPqoQpDzu2pQ2eUxcv5Z3CM=)
+  accessTokenExpiration: ENC(JQIzgjkY0ahMKNtUHe6xpVhAgZ7sycpy)
+  refreshTokenExpiration: ENC(ZXhLuv2z9D2uY/+ZoAKy6MJae4DdRkJA)
 
 
 
@@ -36,3 +42,4 @@ management:
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
+
